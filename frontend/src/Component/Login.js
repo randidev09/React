@@ -34,9 +34,11 @@ class Login extends React.Component {
         .then(res => {
             let response_code = res.data.code
             let token = res.data.token
+            let user = res.data.data
             if(response_code === 200){
                 window.localStorage.setItem('isLogin', true);
                 window.localStorage.setItem('token', token);
+                window.localStorage.setItem('userData', JSON.stringify(user));
                 window.location.reload();
             }
         })

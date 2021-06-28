@@ -26,7 +26,7 @@ class App extends React.Component {
 	    return (
       		<div className="App" id="App">
 				<Router>
-					<Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} />
+					{this.state.isLogin ? <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} /> : ''}
 					<main id="page-wrap">
 						<Navbar isLogin={this.state.isLogin}></Navbar>
 						<Route path="/login">

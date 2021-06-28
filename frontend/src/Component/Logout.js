@@ -9,15 +9,22 @@ class Logout extends React.Component {
         this.state = {email: '',password: '',isLogin: window.localStorage.getItem('isLogin')};
     }
 
-    componentWillMount(props) {
-        window.localStorage.removeItem("isLogin")
+    componentDidMount(props) {
+        window.localStorage.removeItem("isLogin");
+        window.localStorage.removeItem("userData");
+        window.localStorage.removeItem("token");
+        window.location.reload();
       }
     
 
     render() {
-        return(
-            <Redirect to="/login" />
-        )
+        if(!this.state.isLogin){
+            return(
+                <Redirect to="/login" />
+            )
+        }else{
+            return('You will be redirecting, please wait ...')
+        }
     }
 }
   
