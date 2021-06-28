@@ -9,8 +9,8 @@ use Validator;
 class SurveyController extends Controller
 {
     //
-    public function index(){
-        $survey = Survey::all();
+    public function index(Request $request){
+        $survey = Survey::getSurvey($request);
  
         return response()->json([
             'code' => 200,

@@ -12,6 +12,12 @@ COPY package.json ./
 COPY package-lock.json ./  
 RUN npm install --silent  
 RUN npm install react-scripts@3.4.1 -g  
+RUN npm install react-router-dom
+RUN npm install react-bootstrap bootstrap@4.6.0
+RUN npm install axios
+RUN npm install react-burger-menu@^2.9.2 --save
+RUN npm install --save react-chartjs-2 chart.js
+
  
 # add app  
 COPY . ./  
