@@ -26,13 +26,13 @@ class Login extends React.Component {
         });
     }
     
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        axios.post(`http://localhost/api/login`,{
-            email: this.state.email,
-            password: this.state.password,
-        })
-        .then(res => {
+        try {
+            const res = await axios.post(`http://localhost/api/login`,{
+                email: this.state.email,
+                password: this.state.password,
+            })
             let response_code = res.data.code
             let message = res.data.message
             let token = res.data.token
@@ -49,9 +49,10 @@ class Login extends React.Component {
             }else{
                 toast.error(message)
             }
-        }).catch(function(err){
+        }
+        catch(err) {
             toast.error(err.response.data.message)
-        })
+        }
     }
     
     render() {

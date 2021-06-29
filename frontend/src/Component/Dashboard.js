@@ -30,19 +30,21 @@ class Dashboard extends React.Component {
         return year+"-"+month+"-"+date
     }
 
-    componentDidMount(props){
+    async componentDidMount(props){
         if(JSON.parse(window.localStorage.getItem('new_login'))){
             setTimeout(function(){toast.success('Successfully login, welcome')},500)
             window.localStorage.setItem('new_login',false)
         }
-        axios.get(`http://localhost/api/survey`,{
-            params:{
-                type: window.localStorage.getItem('type'),
-                start_date: this.setFormat(window.localStorage.getItem('startDate')),
-                end_date: this.setFormat(window.localStorage.getItem('endDate')),
-            }
-        })
-        .then(res => {
+
+        try {
+            const res = await axios.get(`http://localhost/api/survey`,{
+                params:{
+                    type: window.localStorage.getItem('type'),
+                    start_date: this.setFormat(window.localStorage.getItem('startDate')),
+                    end_date: this.setFormat(window.localStorage.getItem('endDate')),
+                }
+            });
+            
             let response_code = res.data.code
             if(response_code === 200){
                 const dataChart = res.data.data
@@ -180,7 +182,9 @@ class Dashboard extends React.Component {
                     });
                 }
             }
-        })
+        }catch(err){
+            toast.error("Something wrong.")
+        }
     }
     
     render() {
