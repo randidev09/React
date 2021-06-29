@@ -13,6 +13,10 @@ class Logout extends React.Component {
         window.localStorage.removeItem("isLogin");
         window.localStorage.removeItem("userData");
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("startDate");
+        window.localStorage.removeItem("endDate");
+        window.localStorage.removeItem("type");
+        window.localStorage.removeItem("new_login");
         window.location.reload();
       }
     
