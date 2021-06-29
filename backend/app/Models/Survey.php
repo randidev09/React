@@ -29,10 +29,10 @@ class Survey extends Model
             $survey = DB::table('survey as s');
         }
 
-        if(!empty($type)){
+        if(!empty($type) && $type != "all"){
             $survey = $survey->where('type',$type);
         }
         
-        return $survey->get();
+        return $survey->orderBy('response_date','desc')->get();
     }
 }

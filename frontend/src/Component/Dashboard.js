@@ -12,14 +12,30 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             isLogin: window.localStorage.getItem('isLogin'),
-            pieData: {},
-            barData: {},
-            lineData: {}
+            pieData: {} ,
+            barData:  {} ,
+            lineData:  {}
         };
+        this.setFormat = this.setFormat.bind(this)
+    }
+
+    setFormat(t){
+        t = new Date(t)
+        const date = ('0' + t.getDate()).slice(-2);
+        const month = ('0' + (t.getMonth() + 1)).slice(-2);
+        const year = t.getFullYear();
+
+        return year+"-"+month+"-"+date
     }
 
     componentDidMount(props){
-        axios.get(`http://localhost/api/survey`)
+        axios.get(`http://localhost/api/survey`,{
+            params:{
+                type: window.localStorage.getItem('type'),
+                start_date: this.setFormat(window.localStorage.getItem('startDate')),
+                end_date: this.setFormat(window.localStorage.getItem('endDate')),
+            }
+        })
         .then(res => {
             let response_code = res.data.code
             if(response_code === 200){
@@ -92,66 +108,69 @@ class Dashboard extends React.Component {
                 }
                 
                 if(labelPie.length > 0){
+                    const dataPie = {
+                        labels: labelPie,
+                        datasets: [
+                            {
+                            label: 'Best Programming Language',
+                            backgroundColor: [
+                                '#B21F00',
+                                '#C9DE00',
+                                '#2FDE00',
+                                '#00A6B4',
+                                '#6800B4'
+                            ],
+                            hoverBackgroundColor: [
+                                '#501800',
+                                '#4B5000',
+                                '#175000',
+                                '#003350',
+                                '#35014F'
+                            ],
+                            data: valuePie
+                            }
+                        ]
+                    }
                     this.setState({
-                        pieData: {
-                            labels: labelPie,
-                            datasets: [
-                                {
-                                label: 'Best Programming Language',
-                                backgroundColor: [
-                                    '#B21F00',
-                                    '#C9DE00',
-                                    '#2FDE00',
-                                    '#00A6B4',
-                                    '#6800B4'
-                                ],
-                                hoverBackgroundColor: [
-                                    '#501800',
-                                    '#4B5000',
-                                    '#175000',
-                                    '#003350',
-                                    '#35014F'
-                                ],
-                                data: valuePie
-                                }
-                            ]
-                        }
+                        pieData: dataPie
                     });
                 }
 
                 if(labelBar.length > 0){
+                    const dataBar = {
+                        labels: labelBar,
+                        datasets: [
+                            {
+                            label: 'Best City',
+                            backgroundColor: 'rgba(75,192,192,1)',
+                            borderColor: 'rgba(0,0,0,1)',
+                            borderWidth: 2,
+                            data: valueBar
+                            }
+                        ]
+                    }
                     this.setState({
-                        barData: {
-                            labels: labelBar,
-                            datasets: [
-                                {
-                                label: 'Best City',
-                                backgroundColor: 'rgba(75,192,192,1)',
-                                borderColor: 'rgba(0,0,0,1)',
-                                borderWidth: 2,
-                                data: valueBar
-                                }
-                            ]
-                        }
+                        barData: dataBar
                     });
                 }
 
                 if(labelLine.length > 0){
+                    const dataLine = {
+                        labels: labelLine,
+                        datasets: [
+                            {
+                            label: 'Best Country',
+                            fill: false,
+                            lineTension: 0.5,
+                            backgroundColor: 'rgba(75,192,192,1)',
+                            borderColor: 'rgba(0,0,0,1)',
+                            borderWidth: 2,
+                            data: valueLine
+                            }
+                        ]
+                    }
                     this.setState({
-                        lineData: {
-                            labels: labelLine,
-                            datasets: [
-                                {
-                                label: 'Best Country',
-                                fill: false,
-                                lineTension: 0.5,
-                                backgroundColor: 'rgba(75,192,192,1)',
-                                borderColor: 'rgba(0,0,0,1)',
-                                borderWidth: 2,
-                                data: valueLine
-                                }
-                            ]
-                        }
+                        lineData: dataLine
                     });
                 }
             }

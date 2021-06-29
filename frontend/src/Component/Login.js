@@ -39,6 +39,9 @@ class Login extends React.Component {
                 window.localStorage.setItem('isLogin', true);
                 window.localStorage.setItem('token', token);
                 window.localStorage.setItem('userData', JSON.stringify(user));
+                window.localStorage.setItem('startDate', new Date());
+                window.localStorage.setItem('endDate', new Date(new Date(new Date()).setDate(new Date().getDate()+ 30)));
+                window.localStorage.setItem('type', "all");
                 window.location.reload();
             }
         })
