@@ -6,3 +6,6 @@ start_backend:
 
 start_frontend:
 	cd frontend && make start
+
+build_frontend:
+	cd frontend && make build
