@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
 	Redirect 
 } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 class Login extends React.Component {
     constructor(props) {
@@ -33,6 +34,7 @@ class Login extends React.Component {
         })
         .then(res => {
             let response_code = res.data.code
+            let message = res.data.message
             let token = res.data.token
             let user = res.data.data
             if(response_code === 200){
@@ -42,8 +44,13 @@ class Login extends React.Component {
                 window.localStorage.setItem('startDate', new Date());
                 window.localStorage.setItem('endDate', new Date(new Date(new Date()).setDate(new Date().getDate()+ 30)));
                 window.localStorage.setItem('type', "all");
+                window.localStorage.setItem('new_login', true);
                 window.location.reload();
+            }else{
+                toast.error(message)
             }
+        }).catch(function(err){
+            toast.error(err.response.data.message)
         })
     }
     
@@ -51,6 +58,7 @@ class Login extends React.Component {
         if(!this.state.isLogin){
             return (
                 <Container className="mt-5">
+                    <div><Toaster/></div>
                     <Row>
                         <Col sm={6} className="content-center">
                             <Form.Group controlId="formBasicEmail">

@@ -3,8 +3,6 @@ import { push as Menu } from "react-burger-menu";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
-
 
 class Sidebar extends React.Component{
     constructor(props){
@@ -67,11 +65,11 @@ class Sidebar extends React.Component{
                 <Form>
                     <Form.Group>
                         <Form.Label>Survey Type</Form.Label>
-                        <Form.Control as="select" onChange={this.setType}>
-                            {this.state.type === "all" ? <option value="all" selected>All</option> : <option value="all">All</option>}
-                            {this.state.type === "1" ? <option value="1" selected>Best Programming Language</option> : <option value="1">Best Programming Language</option>}
-                            {this.state.type === "2" ? <option value="2" selected>Best City</option> : <option value="2">Best City</option>}
-                            {this.state.type === "3" ? <option value="3" selected>Best Country</option> : <option value="3">Best Country</option>}
+                        <Form.Control as="select" defaultValue={this.state.type} onChange={this.setType}>
+                            <option value="all">All</option>
+                            <option value="1">Best Programming Language</option>
+                            <option value="2">Best City</option> 
+                            <option value="3">Best Country</option> 
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>

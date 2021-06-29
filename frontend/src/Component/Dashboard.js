@@ -6,12 +6,14 @@ import {
 	Redirect 
 } from "react-router-dom";
 import {Pie,Line,Bar} from 'react-chartjs-2';
+import toast, { Toaster } from 'react-hot-toast';
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLogin: window.localStorage.getItem('isLogin'),
+            user: JSON.parse(window.localStorage.getItem('userData')),
             pieData: {} ,
             barData:  {} ,
             lineData:  {}
@@ -29,6 +31,10 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount(props){
+        if(window.localStorage.getItem('new_login')){
+            setTimeout(function(){toast.success('Successfully login, welcome')},500)
+            // window.localStorage.setItem('new_login',false)
+        }
         axios.get(`http://localhost/api/survey`,{
             params:{
                 type: window.localStorage.getItem('type'),
@@ -181,6 +187,7 @@ class Dashboard extends React.Component {
         if(this.state.isLogin){
             return (
                 <Container className="mt-5">
+                    <div><Toaster/></div>
                     <Row>
                         <Col sm={4}>
                             <Card>
