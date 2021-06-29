@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
     componentDidMount(props){
         if(window.localStorage.getItem('new_login')){
             setTimeout(function(){toast.success('Successfully login, welcome')},500)
-            // window.localStorage.setItem('new_login',false)
+            window.localStorage.setItem('new_login',false)
         }
         axios.get(`http://localhost/api/survey`,{
             params:{
