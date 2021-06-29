@@ -19,6 +19,8 @@ RUN npm install react-burger-menu@^2.9.2 --save
 RUN npm install --save react-chartjs-2 chart.js
 RUN npm install react-datepicker --save
 RUN npm install react-hot-toast
+RUN npm install react-data-table-component
+RUN npm install styled-components
 
 # add app  
 COPY . ./  

@@ -7,6 +7,29 @@ import {
 } from "react-router-dom";
 import {Pie,Line,Bar} from 'react-chartjs-2';
 import toast, { Toaster } from 'react-hot-toast';
+import DataTable from 'react-data-table-component';
+
+const data = []
+const columns = [
+  {
+    name: 'Type',
+    selector: 'type',
+    sortable: true,
+  },
+  {
+    name: 'Response',
+    selector: 'response',
+    sortable: true,
+    right: true,
+  },
+  {
+    name: 'Response Date',
+    selector: 'response_date',
+    sortable: true,
+    right: true,
+  },
+];
+
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -16,7 +39,8 @@ class Dashboard extends React.Component {
             user: JSON.parse(window.localStorage.getItem('userData')),
             pieData: {} ,
             barData:  {} ,
-            lineData:  {}
+            lineData:  {} ,
+            tableData: []
         };
         this.setFormat = this.setFormat.bind(this)
     }
@@ -57,6 +81,19 @@ class Dashboard extends React.Component {
                 const valueBar = []
                 const labelLine = []
                 const valueLine = []
+
+                dataChart.map(x => {
+                    const obj = {
+                        type: (x.type === 1) ? 'Survey of Best Programming Language' : (x.type === 2) ? 'Survey of Best City' : 'Survey of Best Country',
+                        response: x.response,
+                        response_date: x.response_date,
+                    }
+                    this.setState({
+                        tableData: [...this.state.tableData, obj]
+                    })
+                })
+
+                console.log(this.state.tableData)
 
                 let current = null;
                 let cnt = 0;
@@ -261,6 +298,20 @@ class Dashboard extends React.Component {
                                             />
                                         : <div className="no-data-text">No data found.</div>
                                     }
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row className="mt-5 mb-5">
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <DataTable
+                                        title="Tabular Data"
+                                        columns={columns}
+                                        data={this.state.tableData}
+                                        pagination={true}
+                                    />
                                 </Card.Body>
                             </Card>
                         </Col>
